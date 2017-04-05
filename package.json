@@ -1,0 +1,23 @@
+{
+  "name": "micro-rpc-client",
+  "version": "0.0.1",
+  "description": "Universal JS client for micro-rpc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bufferapp/micro-rpc-client.git"
+  },
+  "keywords": [
+    "rpc",
+    "client"
+  ],
+  "author": "hharnisc@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bufferapp/micro-rpc-client/issues"
+  },
+  "homepage": "https://github.com/bufferapp/micro-rpc-client#readme"
+}
