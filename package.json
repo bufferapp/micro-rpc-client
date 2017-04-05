@@ -44,7 +44,6 @@
     "jest": "^19.0.2"
   },
   "dependencies": {
-    "request": "^2.81.0",
-    "request-promise": "^4.2.0"
+    "isomorphic-fetch": "^2.2.1"
   }
 }
