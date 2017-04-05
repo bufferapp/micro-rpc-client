@@ -4,7 +4,22 @@
   "description": "Universal JS client for micro-rpc",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "lint": "eslint . --ignore-pattern coverage node_modules",
+    "test": "npm run lint && jest --coverage",
+    "test-watch": "jest --watch",
+    "test-update": "jest -u"
+  },
+  "jest": {
+    "verbose": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -19,5 +34,13 @@
   "bugs": {
     "url": "https://github.com/bufferapp/micro-rpc-client/issues"
   },
-  "homepage": "https://github.com/bufferapp/micro-rpc-client#readme"
+  "homepage": "https://github.com/bufferapp/micro-rpc-client#readme",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "jest": "^19.0.2"
+  }
 }
