@@ -32,16 +32,7 @@ class RPCClient {
   }
 
   listMethods() {
-    return fetch(this.serverUrl, {
-      methods: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        name: 'methods',
-      },
-    })
-      .then(response => response.result);
+    return this.call('methods');
   }
 
   call(name, args) {
