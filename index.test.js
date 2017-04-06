@@ -12,4 +12,10 @@ describe('RPCClient', () => {
     expect(rpc.serverUrl)
       .toBe(serverUrl);
   });
+
+  it('should set default RPC server url', () => {
+    const rpc = new RPCClient();
+    expect(rpc.serverUrl)
+      .toBe('http://localhost');
+  });
 });

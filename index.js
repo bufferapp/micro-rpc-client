@@ -28,7 +28,7 @@
 
 class RPCClient {
   constructor(options = {}) {
-    this.serverUrl = options.serverUrl;
+    this.serverUrl = options.serverUrl || 'http://localhost';
   }
 }
 
