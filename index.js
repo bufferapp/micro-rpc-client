@@ -44,7 +44,7 @@ class RPCClient {
       .then(response => response.result);
   }
 
-  call(name) {
+  call(name, args) {
     return fetch(this.serverUrl, {
       methods: 'post',
       headers: {
@@ -52,6 +52,7 @@ class RPCClient {
       },
       body: {
         name,
+        args: args ? JSON.stringify(args) : undefined,
       },
     })
       .then(response => response.result);

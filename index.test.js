@@ -42,22 +42,46 @@ describe('RPCClient', () => {
   });
 
   describe('call', () => {
-    const name = 'someMethod';
-    const rpc = new RPCClient();
-    return rpc.call(name)
-      .then((response) => {
-        expect(fetch)
-          .toBeCalledWith('http://localhost', {
-            methods: 'post',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: {
-              name,
-            },
-          });
-        expect(response)
-          .toEqual(fetch.fakeResponse);
-      });
+    it('should call RPC method', () => {
+      const name = 'someMethod';
+      const rpc = new RPCClient();
+      return rpc.call(name)
+        .then((response) => {
+          expect(fetch)
+            .toBeCalledWith('http://localhost', {
+              methods: 'post',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: {
+                name,
+              },
+            });
+          expect(response)
+            .toEqual(fetch.fakeResponse);
+        });
+    });
+
+    it('should call RPC method with args', () => {
+      const name = 'someMethod';
+      const args = { a: 'a', b: 'b' };
+      const rpc = new RPCClient();
+      return rpc.call(name, args)
+        .then((response) => {
+          expect(fetch)
+            .toBeCalledWith('http://localhost', {
+              methods: 'post',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: {
+                name,
+                args: JSON.stringify(args),
+              },
+            });
+          expect(response)
+            .toEqual(fetch.fakeResponse);
+        });
+    });
   });
 });
