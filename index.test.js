@@ -40,4 +40,24 @@ describe('RPCClient', () => {
         });
     });
   });
+
+  describe('call', () => {
+    const name = 'someMethod';
+    const rpc = new RPCClient();
+    return rpc.call(name)
+      .then((response) => {
+        expect(fetch)
+          .toBeCalledWith('http://localhost', {
+            methods: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: {
+              name,
+            },
+          });
+        expect(response)
+          .toEqual(fetch.fakeResponse);
+      });
+  });
 });

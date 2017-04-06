@@ -43,6 +43,19 @@ class RPCClient {
     })
       .then(response => response.result);
   }
+
+  call(name) {
+    return fetch(this.serverUrl, {
+      methods: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        name,
+      },
+    })
+      .then(response => response.result);
+  }
 }
 
 module.exports = RPCClient;
