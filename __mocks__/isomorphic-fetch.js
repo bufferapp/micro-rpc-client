@@ -1,13 +1,17 @@
 const fakeMethods = ['methods', 'test'];
 const fakeResponse = 'fake response';
 const fetch = jest.fn((url, options) => {
-  if (options.body.name === 'methods') {
+  if (JSON.parse(options.body).name === 'methods') {
     return Promise.resolve({
-      result: fakeMethods,
+      json: () => Promise.resolve({
+        result: fakeMethods,
+      }),
     });
   }
   return Promise.resolve({
-    result: fakeResponse,
+    json: () => Promise.resolve({
+      result: fakeResponse,
+    }),
   });
 });
 fetch.fakeMethods = fakeMethods;

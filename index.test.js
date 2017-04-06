@@ -27,13 +27,14 @@ describe('RPCClient', () => {
         .then((methods) => {
           expect(fetch)
             .toBeCalledWith('http://localhost', {
-              methods: 'post',
+              method: 'POST',
               headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
               },
-              body: {
+              body: JSON.stringify({
                 name: 'methods',
-              },
+              }),
             });
           expect(methods)
             .toEqual(fetch.fakeMethods);
@@ -49,13 +50,14 @@ describe('RPCClient', () => {
         .then((response) => {
           expect(fetch)
             .toBeCalledWith('http://localhost', {
-              methods: 'post',
+              method: 'POST',
               headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
               },
-              body: {
+              body: JSON.stringify({
                 name,
-              },
+              }),
             });
           expect(response)
             .toEqual(fetch.fakeResponse);
@@ -70,14 +72,15 @@ describe('RPCClient', () => {
         .then((response) => {
           expect(fetch)
             .toBeCalledWith('http://localhost', {
-              methods: 'post',
+              method: 'POST',
               headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
               },
-              body: {
+              body: JSON.stringify({
                 name,
                 args: JSON.stringify(args),
-              },
+              }),
             });
           expect(response)
             .toEqual(fetch.fakeResponse);

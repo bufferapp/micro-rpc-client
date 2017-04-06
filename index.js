@@ -37,16 +37,18 @@ class RPCClient {
 
   call(name, args) {
     return fetch(this.serverUrl, {
-      methods: 'post',
+      method: 'POST',
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: {
+      body: JSON.stringify({
         name,
-        args: args ? JSON.stringify(args) : undefined,
-      },
+        args: JSON.stringify(args),
+      }),
     })
-      .then(response => response.result);
+      .then(response => response.json())
+      .then(json => json.result);
   }
 }
 
