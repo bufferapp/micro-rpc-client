@@ -1,3 +1,4 @@
+const fetch = require('isomorphic-fetch');
 const RPCClient = require('./index');
 
 describe('RPCClient', () => {
@@ -17,5 +18,26 @@ describe('RPCClient', () => {
     const rpc = new RPCClient();
     expect(rpc.serverUrl)
       .toBe('http://localhost');
+  });
+
+  describe('listMethods', () => {
+    it('should list available RPC methods', () => {
+      const rpc = new RPCClient();
+      return rpc.listMethods()
+        .then((methods) => {
+          expect(fetch)
+            .toBeCalledWith('http://localhost', {
+              methods: 'post',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: {
+                name: 'methods',
+              },
+            });
+          expect(methods)
+            .toEqual(fetch.fakeMethods);
+        });
+    });
   });
 });

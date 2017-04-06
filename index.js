@@ -24,11 +24,24 @@
 // const rpc = new RPCClient('server');
 // rpc.listMethods().then((methods) => console.log(methods));
 
-// const fetch = require('isomorphic-fetch');
+const fetch = require('isomorphic-fetch');
 
 class RPCClient {
   constructor(options = {}) {
     this.serverUrl = options.serverUrl || 'http://localhost';
+  }
+
+  listMethods() {
+    return fetch(this.serverUrl, {
+      methods: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        name: 'methods',
+      },
+    })
+      .then(response => response.result);
   }
 }
 
