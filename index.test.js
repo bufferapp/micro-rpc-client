@@ -86,5 +86,18 @@ describe('RPCClient', () => {
             .toEqual(fetch.fakeResponse);
         });
     });
+
+    it('should trigger error when response !== 200', () => {
+      const name = 'shouldThrow';
+      const rpc = new RPCClient();
+      return rpc.call(name)
+        .then(() => {
+          throw new Error('this should not happen');
+        })
+        .catch((err) => {
+          expect(err)
+            .toEqual(new Error('this method should throw an error'));
+        });
+    });
   });
 });
