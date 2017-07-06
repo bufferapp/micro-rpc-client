@@ -8,15 +8,15 @@ describe('RPCClient', () => {
   });
 
   it('should set RPC server url', () => {
-    const serverUrl = 'http://some-rpc-server';
-    const rpc = new RPCClient({ serverUrl });
-    expect(rpc.serverUrl)
-      .toBe(serverUrl);
+    const url = 'http://some-rpc-server';
+    const rpc = new RPCClient({ url });
+    expect(rpc.url)
+      .toBe(url);
   });
 
   it('should set default RPC server url', () => {
     const rpc = new RPCClient();
-    expect(rpc.serverUrl)
+    expect(rpc.url)
       .toBe('http://localhost');
   });
 

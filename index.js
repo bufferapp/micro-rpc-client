@@ -2,7 +2,7 @@ const fetch = require('isomorphic-fetch');
 
 class RPCClient {
   constructor(options = {}) {
-    this.serverUrl = options.serverUrl || 'http://localhost';
+    this.url = options.url || 'http://localhost';
   }
 
   listMethods() {
@@ -10,7 +10,7 @@ class RPCClient {
   }
 
   call(name, args) {
-    return fetch(this.serverUrl, {
+    return fetch(this.url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -2,7 +2,7 @@
 const RPCClient = require('./index');
 
 const rpc = new RPCClient({
-  serverUrl: 'https://rpc.local.buffer.com',
+  url: 'https://rpc.local.buffer.com',
 });
 
 rpc.listMethods()
