@@ -21,14 +21,17 @@ class RPCClient {
         args: JSON.stringify(args),
       }),
     })
+      .then(response => response.json())
       .then((response) => {
-        if (response.status !== 200) {
-          throw new Error(response.statusText);
+        if (response.error) {
+          // throw a handled exception
+          const err = new Error(response.error);
+          err.handled = true;
+          throw err;
         }
         return response;
       })
-      .then(response => response.json())
-      .then(json => json.result);
+      .then(response => response.result);
   }
 }
 
