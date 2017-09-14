@@ -3,6 +3,7 @@ const fetch = require('isomorphic-fetch');
 class RPCClient {
   constructor(options = {}) {
     this.url = options.url || 'http://localhost';
+    this.sendCredentials = options.sendCredentials;
   }
 
   listMethods() {
@@ -20,6 +21,7 @@ class RPCClient {
         name,
         args: JSON.stringify(args),
       }),
+      credentials: this.sendCredentials,
     })
       .then(response => response.json())
       .then((response) => {
