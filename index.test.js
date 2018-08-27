@@ -1,7 +1,20 @@
 const fetch = require('isomorphic-fetch');
 const RPCClient = require('./index');
 
+const mockPayload = body => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(body),
+});
+
 describe('RPCClient', () => {
+  beforeEach(() => {
+    fetch.mockClear();
+  });
+
   it('should create an RPCClient', () => {
     expect(new RPCClient())
       .toBeDefined();
@@ -21,24 +34,17 @@ describe('RPCClient', () => {
   });
 
   describe('listMethods', () => {
-    it('should list available RPC methods', () => {
+    it('should call `methods` method', () => {
       const rpc = new RPCClient();
-      return rpc.listMethods()
-        .then((methods) => {
-          expect(fetch)
-            .toBeCalledWith('http://localhost', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                name: 'methods',
-              }),
-            });
-          expect(methods)
-            .toEqual(fetch.fakeMethods);
-        });
+
+      rpc.listMethods();
+
+      expect(fetch).toBeCalledWith(
+        'http://localhost',
+        mockPayload({
+          name: 'methods',
+        }),
+      );
     });
   });
 
@@ -46,45 +52,41 @@ describe('RPCClient', () => {
     it('should call RPC method', () => {
       const name = 'someMethod';
       const rpc = new RPCClient();
-      return rpc.call(name)
-        .then((response) => {
-          expect(fetch)
-            .toBeCalledWith('http://localhost', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                name,
-              }),
-            });
-          expect(response)
-            .toEqual(fetch.fakeResponse);
-        });
+
+      rpc.call(name);
+
+      expect(fetch).toBeCalledWith(
+        'http://localhost',
+        mockPayload({
+          name,
+        }),
+      );
     });
 
     it('should call RPC method with args', () => {
       const name = 'someMethod';
       const args = { a: 'a', b: 'b' };
       const rpc = new RPCClient();
-      return rpc.call(name, args)
-        .then((response) => {
-          expect(fetch)
-            .toBeCalledWith('http://localhost', {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                name,
-                args: JSON.stringify(args),
-              }),
-            });
-          expect(response)
-            .toEqual(fetch.fakeResponse);
-        });
+
+      rpc.call(name, args);
+
+      expect(fetch).toBeCalledWith(
+        'http://localhost',
+        mockPayload({
+          name,
+          args: JSON.stringify(args),
+        }),
+      );
+    });
+
+    it('should return the result for an RPC method', () => {
+      const name = 'someMethod';
+      const args = { a: 'a', b: 'b' };
+      const rpc = new RPCClient();
+
+      const response = rpc.call(name, args);
+
+      return expect(response).resolves.toEqual(fetch.fakeResponse);
     });
 
     it('should trigger error when response !== 200', () => {
