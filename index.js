@@ -23,17 +23,22 @@ class RPCClient {
       }),
       credentials: this.sendCredentials,
     })
-      .then(response => response.json())
       .then((response) => {
-        if (response.error) {
-          // throw a handled exception
-          const err = new Error(response.error);
-          err.handled = true;
-          throw err;
-        }
-        return response;
-      })
-      .then(response => response.result);
+        const bodyPromise = response.json();
+
+        return bodyPromise
+          .then((body) => {
+            if (body.error) {
+              // throw a handled exception
+              const err = new Error(body.error);
+              err.handled = true;
+              err.status = response.status;
+              throw err;
+            }
+
+            return body.result;
+          });
+      });
   }
 }
 

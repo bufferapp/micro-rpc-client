@@ -95,5 +95,14 @@ describe('RPCClient', () => {
 
       return expect(response).rejects.toThrow('this method should throw an error');
     });
+
+    it('should include the status code in the error when response !== 200', () => {
+      const name = 'shouldThrow';
+      const rpc = new RPCClient();
+
+      const response = rpc.call(name);
+
+      return expect(response).rejects.toMatchObject({ status: 400 });
+    });
   });
 });
