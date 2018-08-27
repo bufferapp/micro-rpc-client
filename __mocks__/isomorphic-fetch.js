@@ -11,7 +11,9 @@ const fetch = jest.fn((url, options) => {
   } else if (JSON.parse(options.body).name === 'shouldThrow') {
     return Promise.resolve({
       status: 400,
-      statusText: 'this method should throw an error',
+      json: () => Promise.resolve({
+        error: 'this method should throw an error',
+      }),
     });
   }
   return Promise.resolve({
