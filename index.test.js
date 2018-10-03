@@ -76,7 +76,7 @@ describe('RPCClient', () => {
     });
 
     it('should trigger error when response !== 200', async () => {
-      expect.assertions(2);
+      expect.assertions(3);
       const name = 'shouldThrow';
       const rpc = new RPCClient();
       try {
@@ -84,6 +84,7 @@ describe('RPCClient', () => {
       } catch (err) {
         expect(err.handled).toBe(true);
         expect(err.message).toBe('this method should throw an error');
+        expect(err.code).toBeUndefined();
       }
     });
 
