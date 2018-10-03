@@ -38,4 +38,5 @@ const fetch = jest.fn((url, options) => {
 });
 fetch.fakeMethods = fakeMethods;
 fetch.fakeResponse = fakeResponse;
+fetch.fakeCode = fakeCode;
 module.exports = fetch;

@@ -28,6 +28,7 @@ class RPCClient {
         if (response.error) {
           // throw a handled exception
           const err = new Error(response.error);
+          err.code = response.code;
           err.handled = true;
           throw err;
         }

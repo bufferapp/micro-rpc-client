@@ -88,13 +88,14 @@ describe('RPCClient', () => {
     });
 
     it('should trigger error when response !== 200 with custom code', async () => {
-      expect.assertions(2);
+      expect.assertions(3);
       const name = 'shouldThrowCustomCode';
       const rpc = new RPCClient();
       try {
         await rpc.call(name);
       } catch (err) {
         expect(err.message).toBe('this method should throw an error');
+        expect(err.code).toBeDefined();
         expect(err.code).toBe(fetch.fakeCode);
       }
     });
