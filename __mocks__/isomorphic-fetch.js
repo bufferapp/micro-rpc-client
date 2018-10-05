@@ -27,6 +27,18 @@ const fetch = jest.fn((url, options) => {
           code: fakeCode,
         }),
     });
+  } else if (JSON.parse(options.body).name === 'shouldThrowJSON500') {
+    return Promise.resolve({
+      status: 500,
+      json: () => Promise.resolve({
+        error: 'some unexpected error occured',
+      }),
+    });
+  } else if (JSON.parse(options.body).name === 'shouldFailJson') {
+    return Promise.resolve({
+      status: 500,
+      json: () => Promise.reject(new Error('something went wrong parsing json')),
+    });
   }
   return Promise.resolve({
     status: 200,

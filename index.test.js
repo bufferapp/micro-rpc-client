@@ -89,7 +89,7 @@ describe('RPCClient', () => {
     });
 
     it('should trigger error when response !== 200 with custom code', async () => {
-      expect.assertions(3);
+      expect.assertions(4);
       const name = 'shouldThrowCustomCode';
       const rpc = new RPCClient();
       try {
@@ -98,6 +98,30 @@ describe('RPCClient', () => {
         expect(err.message).toBe('this method should throw an error');
         expect(err.code).toBeDefined();
         expect(err.code).toBe(fetch.fakeCode);
+        expect(err.handled).toBe(true);
+      }
+    });
+
+    it('should trigger an unhandled error when response === 500', async () => {
+      expect.assertions(2);
+      const name = 'shouldThrowJSON500';
+      const rpc = new RPCClient();
+      try {
+        await rpc.call(name);
+      } catch (err) {
+        expect(err.message).toBe('some unexpected error occured');
+        expect(err.handled).toBe(false);
+      }
+    });
+
+    it('should reject when json parse fails', async () => {
+      expect.assertions(1);
+      const name = 'shouldFailJson';
+      const rpc = new RPCClient();
+      try {
+        await rpc.call(name);
+      } catch (err) {
+        expect(err.message).toBe('something went wrong parsing json');
       }
     });
   });

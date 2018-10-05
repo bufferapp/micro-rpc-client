@@ -23,13 +23,21 @@ class RPCClient {
       }),
       credentials: this.sendCredentials,
     })
-      .then(response => response.json())
-      .then((response) => {
+      .then(({ json, status }) =>
+        new Promise((resolve, reject) => {
+          json()
+            .then(parsedResponse => resolve({
+              response: parsedResponse,
+              status,
+            }))
+            .catch(error => reject(error));
+        }))
+      .then(({ response, status }) => {
         if (response.error) {
           // throw a handled exception
           const err = new Error(response.error);
           err.code = response.code;
-          err.handled = true;
+          err.handled = status === 400;
           throw err;
         }
         return response;
