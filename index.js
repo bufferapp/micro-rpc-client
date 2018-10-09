@@ -23,21 +23,25 @@ class RPCClient {
       }),
       credentials: this.sendCredentials,
     })
-      .then(({ json, status }) =>
-        new Promise((resolve, reject) => {
-          json()
-            .then(parsedResponse => resolve({
-              response: parsedResponse,
-              status,
-            }))
-            .catch(error => reject(error));
-        }))
+      .then(
+        ({ json, status }) =>
+          new Promise((resolve, reject) => {
+            json()
+              .then(parsedResponse =>
+                resolve({
+                  response: parsedResponse,
+                  status,
+                }),
+              )
+              .catch(error => reject(error));
+          }),
+      )
       .then(({ response, status }) => {
         if (response.error) {
-          // throw a handled exception
           const err = new Error(response.error);
           err.code = response.code;
-          err.handled = status === 400;
+          err.handled = response.handled;
+          err.status = status;
           throw err;
         }
         return response;
