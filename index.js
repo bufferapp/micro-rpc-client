@@ -24,13 +24,14 @@ class RPCClient {
       credentials: this.sendCredentials,
     })
       .then(
-        ({ json, status }) =>
+        response =>
           new Promise((resolve, reject) => {
-            json()
+            response
+              .json()
               .then(parsedResponse =>
                 resolve({
                   response: parsedResponse,
-                  status,
+                  status: response.status,
                 }),
               )
               .catch(error => reject(error));
