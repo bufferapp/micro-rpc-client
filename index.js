@@ -1,4 +1,5 @@
 const fetch = require('isomorphic-fetch');
+const https = require("https");
 
 class RPCClient {
   constructor(options = {}) {
@@ -11,7 +12,7 @@ class RPCClient {
   }
 
   call(name, args) {
-    return fetch(this.url, {
+    const options = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -22,7 +23,13 @@ class RPCClient {
         args: JSON.stringify(args),
       }),
       credentials: this.sendCredentials,
-    })
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      options.agent = new https.Agent({
+        rejectUnauthorized: false
+      });
+    }
+    return fetch(this.url, options)
       .then(
         response =>
           new Promise((resolve, reject) => {
