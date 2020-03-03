@@ -1,8 +1,14 @@
 const fakeMethods = ['methods', 'test'];
 const fakeResponse = 'fake response';
 const fakeCode = 1001;
+
+const parseMethodFromUrl = (url) => {
+  const split = url.split('/');
+  return split.pop();
+}
+
 const fetch = jest.fn((url, options) => {
-  if (JSON.parse(options.body).name === 'methods') {
+  if (parseMethodFromUrl(url) === 'methods') {
     return Promise.resolve({
       status: 200,
       json: () =>
@@ -10,7 +16,7 @@ const fetch = jest.fn((url, options) => {
           result: fakeMethods,
         }),
     });
-  } else if (JSON.parse(options.body).name === 'shouldThrow') {
+  } else if (parseMethodFromUrl(url) === 'shouldThrow') {
     return Promise.resolve({
       status: 400,
       json: () =>
@@ -19,7 +25,7 @@ const fetch = jest.fn((url, options) => {
           handled: true,
         }),
     });
-  } else if (JSON.parse(options.body).name === 'shouldThrowCustomCode') {
+  } else if (parseMethodFromUrl(url) === 'shouldThrowCustomCode') {
     return Promise.resolve({
       status: 400,
       json: () =>
@@ -29,7 +35,7 @@ const fetch = jest.fn((url, options) => {
           handled: true,
         }),
     });
-  } else if (JSON.parse(options.body).name === 'shouldThrowJSON500') {
+  } else if (parseMethodFromUrl(url) === 'shouldThrowJSON500') {
     return Promise.resolve({
       status: 500,
       json: () =>
@@ -38,7 +44,7 @@ const fetch = jest.fn((url, options) => {
           handled: false,
         }),
     });
-  } else if (JSON.parse(options.body).name === 'shouldFailJson') {
+  } else if (parseMethodFromUrl(url) === 'shouldFailJson') {
     return Promise.resolve({
       status: 500,
       json: () => Promise.reject(new Error('something went wrong parsing json')),

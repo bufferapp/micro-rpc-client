@@ -21,15 +21,13 @@ describe('RPCClient', () => {
     it('should list available RPC methods', () => {
       const rpc = new RPCClient();
       return rpc.listMethods().then((methods) => {
-        expect(fetch).toBeCalledWith('http://localhost', {
+        expect(fetch).toBeCalledWith('http://localhost/methods', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            name: 'methods',
-          }),
+          body: JSON.stringify({}),
         });
         expect(methods).toEqual(fetch.fakeMethods);
       });
@@ -41,15 +39,13 @@ describe('RPCClient', () => {
       const name = 'someMethod';
       const rpc = new RPCClient();
       return rpc.call(name).then((response) => {
-        expect(fetch).toBeCalledWith('http://localhost', {
+        expect(fetch).toBeCalledWith('http://localhost/someMethod', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            name,
-          }),
+          body: JSON.stringify({}),
         });
         expect(response).toEqual(fetch.fakeResponse);
       });
@@ -60,14 +56,13 @@ describe('RPCClient', () => {
       const args = { a: 'a', b: 'b' };
       const rpc = new RPCClient();
       return rpc.call(name, args).then((response) => {
-        expect(fetch).toBeCalledWith('http://localhost', {
+        expect(fetch).toBeCalledWith('http://localhost/someMethod', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name,
             args: JSON.stringify(args),
           }),
         });
