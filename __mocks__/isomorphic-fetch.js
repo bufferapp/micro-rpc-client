@@ -5,9 +5,9 @@ const fakeCode = 1001;
 const parseMethodFromUrl = (url) => {
   const split = url.split('/');
   return split.pop();
-}
+};
 
-const fetch = jest.fn((url, options) => {
+const fetch = jest.fn((url) => {
   if (parseMethodFromUrl(url) === 'methods') {
     return Promise.resolve({
       status: 200,
