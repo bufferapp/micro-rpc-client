@@ -1,5 +1,5 @@
 {
-  "name": "micro-rpc-client",
+  "name": "@bufferapp/micro-rpc-client",
   "version": "0.1.5",
   "description": "Universal JS client for micro-rpc",
   "main": "index.js",
