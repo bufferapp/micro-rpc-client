@@ -19,7 +19,6 @@ class RPCClient {
         ...headers,
       },
       body: JSON.stringify({
-        name,
         args: JSON.stringify(args),
       }),
       credentials: this.sendCredentials,
