@@ -123,4 +123,27 @@ describe('RPCClient', () => {
       }
     });
   });
+
+  describe('headers', () => {
+    it('should call RPC method with headers', async () => {
+      const name = 'someMethod';
+      const args = { a: 'a', b: 'b' };
+      const headers = { foo: 'bar' };
+      const rpc = new RPCClient();
+      const response = await rpc.call(name, args, headers);
+
+      expect(fetch).toBeCalledWith('http://localhost/someMethod', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+        body: JSON.stringify({
+          args: JSON.stringify(args),
+        }),
+      });
+      expect(response).toEqual(fetch.fakeResponse);
+    });
+  });
 });

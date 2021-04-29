@@ -10,12 +10,13 @@ class RPCClient {
     return this.call('methods');
   }
 
-  call(name, args) {
+  call(name, args, headers = {}) {
     return fetch(`${this.url}/${name}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        ...headers,
       },
       body: JSON.stringify({
         args: JSON.stringify(args),
