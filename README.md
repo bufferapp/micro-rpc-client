@@ -1,3 +1,6 @@
+# deprecated
+As of the 23rd of September 2024, `micro-rpc-client` will be unmaintained and deprecated. 
+
 # micro-rpc-client
 
 [![Build Status](https://travis-ci.org/bufferapp/micro-rpc-client.svg?branch=master)](https://travis-ci.org/bufferapp/micro-rpc-client)
